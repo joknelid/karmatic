@@ -9,24 +9,6 @@ var simpleCodeFrame = require('simple-code-frame');
 var errorstacks = require('errorstacks');
 var delve = _interopDefault(require('dlv'));
 
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
 const cwd = process.cwd();
 const res = file => path.resolve(cwd, file);
 function fileExists(file) {
@@ -365,6 +347,24 @@ function addWebpackConfig(karmaConfig, pkg, options) {
   return karmaConfig;
 }
 
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
 /**
  * @param {import('./configure').Options} options
  */
@@ -552,12 +552,11 @@ async function configure(options) {
   let pkg = tryRequire(res('package.json'));
   const chromeDataDir = options.chromeDataDir ? path.resolve(cwd, options.chromeDataDir) : null;
   const flags = ['--no-sandbox'];
-  const rawKarmaOpts = options.karmaOptions || {};
-
-  let generatedConfig = _extends({}, rawKarmaOpts, {
+  let generatedConfig = {
     basePath: cwd,
     plugins: PLUGINS.map(req => require.resolve(req)),
     frameworks: ['jasmine'],
+    browserNoActivityTimeout: options.inactivityTimeout,
     reporters: [options.watch ? 'min' : 'spec'].concat(options.coverage ? 'coverage' : [], useSauceLabs ? 'saucelabs' : []),
     browsers,
     sauceLabs: {
@@ -637,7 +636,7 @@ async function configure(options) {
         random: false
       }
     }
-  });
+  };
 
   if (shouldUseWebpack()) {
     addWebpackConfig(generatedConfig, pkg, options);

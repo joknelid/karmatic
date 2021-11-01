@@ -147,7 +147,7 @@ const {
 let toArray = val => typeof val === 'string' ? val.split(/\s*,\s*/) : val == null ? [] : [].concat(val);
 
 let prog = sade('karmatic');
-prog.version(version).option('--files', 'Minimatch pattern for test files').option('--headless', 'Run using Chrome Headless', true).option('--coverage', 'Report code coverage of tests', true).option('--downlevel', 'Downlevel syntax to ES5').option('--chromeDataDir', 'Save Chrome preferences');
+prog.version(version).option('--files', 'Minimatch pattern for test files').option('--headless', 'Run using Chrome Headless', true).option('--coverage', 'Report code coverage of tests', true).option('--downlevel', 'Downlevel syntax to ES5').option('--chromeDataDir', 'Save Chrome preferences').option('--inactivityTimeout', 'Timeout before shutting down the browser');
 prog.command('run [...files]', '', {
   default: true
 }).describe('Run tests once and exit').option('--watch', 'Enable watch mode (alias: karmatic watch)', false).action(run);

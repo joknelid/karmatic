@@ -121,13 +121,11 @@ export default async function configure(options) {
 
 	const flags = ['--no-sandbox'];
 
-	const rawKarmaOpts = options.karmaOptions || {};
-
 	let generatedConfig = {
-		...rawKarmaOpts,
 		basePath: cwd,
 		plugins: PLUGINS.map((req) => require.resolve(req)),
 		frameworks: ['jasmine'],
+		browserNoActivityTimeout: options.inactivityTimeout,
 		reporters: [options.watch ? 'min' : 'spec'].concat(
 			options.coverage ? 'coverage' : [],
 			useSauceLabs ? 'saucelabs' : []

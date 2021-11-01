@@ -24,7 +24,8 @@ prog
 	.option('--headless', 'Run using Chrome Headless', true)
 	.option('--coverage', 'Report code coverage of tests', true)
 	.option('--downlevel', 'Downlevel syntax to ES5')
-	.option('--chromeDataDir', 'Save Chrome preferences');
+	.option('--chromeDataDir', 'Save Chrome preferences')
+	.option('--inactivityTimeout', 'Timeout before shutting down the browser');
 
 prog
 	.command('run [...files]', '', { default: true })
