@@ -121,7 +121,10 @@ export default async function configure(options) {
 
 	const flags = ['--no-sandbox'];
 
+	const rawKarmaOpts = options.karmaOptions || {};
+
 	let generatedConfig = {
+		...rawKarmaOpts,
 		basePath: cwd,
 		plugins: PLUGINS.map((req) => require.resolve(req)),
 		frameworks: ['jasmine'],
